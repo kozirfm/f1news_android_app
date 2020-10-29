@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">f1news</string>
+    <string name="username">Имя пользователя</string>
+    <string name="email">Email</string>
+    <string name="password">Пароль</string>
+    <string name="sign_up">Зарегистрироваться</string>
+    <string name="authorization">Авторизация</string>
+    <string name="sign_in">Войти</string>
+    <string name="registration">Регистрация</string>
+    <string name="enter_username_or_email">Введите имя пользователя или email</string>
+    <string name="enter_password">Введите пароль</string>
+    <string name="news">Новости</string>
+    <string name="arrow_down">Arrow down</string>
+</resources>
