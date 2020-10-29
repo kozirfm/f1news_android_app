@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.activities.RegistrationActivity">
+    tools:context=".ui.fragments.AuthorizationFragment">
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
@@ -15,16 +15,16 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <com.google.android.material.appbar.MaterialToolbar
-            android:id="@+id/registrationActivityToolbar"
+            android:id="@+id/authorizationFragmentToolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             app:navigationIcon="@drawable/ic_baseline_arrow_back_24"
-            app:title="@string/registration" />
+            app:title="@string/authorization" />
 
     </com.google.android.material.appbar.AppBarLayout>
 
     <LinearLayout
-        android:id="@+id/registrationLinearLayout"
+        android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
@@ -38,12 +38,13 @@
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/username">
+            android:hint="@string/enter_username_or_email">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/registrationUsernameEditText"
+                android:id="@+id/usernameAuthorizationActivityEditText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
                 android:inputType="text" />
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -52,25 +53,10 @@
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/email">
+            android:hint="@string/enter_password">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/registrationEmailEditText"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginVertical="8dp"
-                android:inputType="textEmailAddress" />
-
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/password">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/registrationPasswordEditText"
+                android:id="@+id/passwordAuthorizationActivityEditText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textPassword" />
@@ -80,13 +66,23 @@
     </LinearLayout>
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/sendRegistrationDataButton"
+        android:id="@+id/signInAuthorizationActivityButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/sign_up"
+        android:text="@string/sign_in"
+        app:layout_constraintBottom_toTopOf="@+id/signUpAuthorizationFragmentButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/signUpAuthorizationFragmentButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/registration"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/registrationLinearLayout" />
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

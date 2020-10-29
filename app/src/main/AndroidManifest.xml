@@ -12,15 +12,13 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name="ru.kozirfm.f1news.ui.activities.MainActivity">
+        <activity android:name="ru.kozirfm.f1news.ui.activity.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.activities.AuthorizationActivity"/>
-        <activity android:name=".ui.activities.RegistrationActivity"/>
     </application>
 
 </manifest>
