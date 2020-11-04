@@ -15,22 +15,21 @@ import ru.kozirfm.f1news.ui.viewstates.NewsViewState
 
 class NewsFragment : BaseFragment() {
 
-    companion object {
-        val TAG = NewsFragment::class.java.name + "TAG"
-    }
-
     private val newsViewModel: NewsViewModel by lazy { ViewModelProvider(this).get(NewsViewModel::class.java) }
     private val articlesRecyclerViewAdapter: ArticlesRecyclerViewAdapter by lazy { ArticlesRecyclerViewAdapter() }
 
     override val bottomNavigationVisibility: Int = View.VISIBLE
     override val fragmentLayout: Int = R.layout.fragment_news
+    override val fragmentTag: String = NewsFragment::class.java.name + "TAG"
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         mainActivityToolbar.setOnMenuItemClickListener {
             when (it.itemId) {
                 R.id.signInMenuItem -> {
-                    FragmentManager.replaceFragment(fragment = AuthorizationFragment(), tag = AuthorizationFragment.TAG)
+                    FragmentManager.replaceFragment(
+                        fragment = AuthorizationFragment()
+                    )
                     return@setOnMenuItemClickListener true
                 }
                 else -> return@setOnMenuItemClickListener false
@@ -42,20 +41,21 @@ class NewsFragment : BaseFragment() {
         articlesRecyclerView.adapter = articlesRecyclerViewAdapter
         articlesRecyclerView.hasFixedSize()
 
-        newsViewModel.viewState.observe(this, { viewState ->
+        newsViewModel.viewState.observe(this) { viewState ->
             when (viewState) {
                 is NewsViewState.ShowArticles -> viewState.articles?.let {
                     articlesRecyclerViewAdapter.articles = it
                 }
-                is NewsViewState.ShowError ->{
+                is NewsViewState.ShowError -> {
                     val errorToast: Toast = Toast.makeText(
                         requireContext(),
                         getString(R.string.server_error),
-                        Toast.LENGTH_SHORT)
+                        Toast.LENGTH_SHORT
+                    )
                     errorToast.setGravity(Gravity.CENTER, 0, 0)
                     errorToast.show()
                 }
             }
-        })
+        }
     }
 }

@@ -2,40 +2,69 @@ package ru.kozirfm.f1news.ui.activity
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.Fragment
+import kotlinx.android.synthetic.main.container_with_navigation.*
 import ru.kozirfm.f1news.R
+import ru.kozirfm.f1news.ui.fragments.BaseFragment
+import ru.kozirfm.f1news.ui.fragments.ChampionshipFragment
 import ru.kozirfm.f1news.ui.fragments.NewsFragment
 
-class MainActivity : AppCompatActivity(), IChangeFragmentManager {
+class MainActivity : AppCompatActivity(), FragmentManagerChanger {
 
     init {
-        FragmentManager.changeFragmentManager = this
+        FragmentManager.fragmentManagerChanger = this
     }
+
+    private val newsFragment by lazy { NewsFragment() }
+    private val championshipFragment by lazy { ChampionshipFragment() }
+    private val bottomMenuBackStack = arrayListOf<BaseFragment>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.container_with_navigation)
-        FragmentManager.replaceFragment(fragment = NewsFragment())
-    }
+        replaceFragment(newsFragment)
 
-    override fun replaceFragment(fragment: Fragment, tag: String?) {
-        if (tag != null) {
-            supportFragmentManager
-                .beginTransaction()
-                .addToBackStack(tag)
-                .replace(R.id.containerWithNavigation, fragment)
-                .commit()
-        } else {
-            supportFragmentManager
-                .beginTransaction()
-                .replace(R.id.containerWithNavigation, fragment)
-                .commit()
+        bottomNavigationView.setOnNavigationItemSelectedListener {
+            when (it.itemId) {
+                R.id.newsMenuItem -> {
+                    replaceFragment(fragment = newsFragment)
+                    return@setOnNavigationItemSelectedListener true
+                }
+                R.id.championshipMenuItem -> {
+                    replaceFragment(fragment = championshipFragment)
+                    return@setOnNavigationItemSelectedListener true
+                }
+                else -> return@setOnNavigationItemSelectedListener false
+            }
         }
     }
 
-    override fun finishFragment() {
-        supportFragmentManager.popBackStack()
+    override fun replaceFragment(fragment: BaseFragment) {
+        if (bottomMenuBackStack.contains(fragment)) {
+            bottomMenuBackStack.remove(fragment)
+            bottomMenuBackStack.add(fragment)
+        } else {
+            bottomMenuBackStack.add(fragment)
+        }
+
+        supportFragmentManager
+            .beginTransaction()
+            .replace(
+                R.id.containerWithNavigation,
+                bottomMenuBackStack.last()
+            )
+            .commit()
     }
 
+    override fun finishFragment() {
+        if (bottomMenuBackStack.last() == newsFragment) {
+            finish()
+            return
+        }
+        bottomMenuBackStack.remove(bottomMenuBackStack.last())
+        replaceFragment(bottomMenuBackStack.last())
+    }
 
+    override fun onBackPressed() {
+        finishFragment()
+    }
 }

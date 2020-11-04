@@ -8,12 +8,9 @@ import ru.kozirfm.f1news.ui.activity.FragmentManager
 
 class AuthorizationFragment : BaseFragment() {
 
-    companion object {
-        val TAG = AuthorizationFragment::class.java.name + "TAG"
-    }
-
     override val bottomNavigationVisibility: Int = View.GONE
     override val fragmentLayout: Int = R.layout.fragment_authorization
+    override val fragmentTag: String = AuthorizationFragment::class.java.name + "TAG"
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -22,7 +19,7 @@ class AuthorizationFragment : BaseFragment() {
         }
 
         signUpAuthorizationFragmentButton.setOnClickListener {
-            FragmentManager.replaceFragment(RegistrationFragment(), RegistrationFragment.TAG)
+            FragmentManager.replaceFragment(RegistrationFragment())
         }
     }
 }

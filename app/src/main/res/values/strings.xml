@@ -13,4 +13,8 @@
     <string name="arrow_down">Стрелка вниз</string>
     <string name="championship">Чемпионат</string>
     <string name="server_error">Сервер временно не доступен</string>
+    <string name="number">№</string>
+    <string name="driver">Гонщик</string>
+    <string name="team">Команда</string>
+    <string name="points">Очки</string>
 </resources>

@@ -6,6 +6,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import ru.kozirfm.f1news.data.entites.Article
+import ru.kozirfm.f1news.data.entites.Driver
 import ru.kozirfm.f1news.data.entites.User
 import ru.kozirfm.f1news.data.model.ServerResult
 import ru.kozirfm.f1news.data.retrofit.RetrofitApi
@@ -29,7 +30,21 @@ class ServerDataProvider : RemoteDataProvider {
         return resultLiveData
     }
 
-    override fun addUser(user : User) {
+    override fun getDriversChampionshipTable(): LiveData<ServerResult> {
+        val resultLiveData = MutableLiveData<ServerResult>()
+        api.getDriversChampionshipTable().enqueue(object : Callback<List<Driver>> {
+            override fun onResponse(call: Call<List<Driver>>, response: Response<List<Driver>>) {
+                resultLiveData.value = ServerResult.Success(response.body())
+            }
+
+            override fun onFailure(call: Call<List<Driver>>, t: Throwable) {
+                resultLiveData.value = ServerResult.Error(t)
+            }
+        })
+        return resultLiveData
+    }
+
+    override fun addUser(user: User) {
         api.registration(user).enqueue(object : Callback<String> {
             override fun onResponse(call: Call<String>, response: Response<String>) {
                 println(response.body())
@@ -40,5 +55,6 @@ class ServerDataProvider : RemoteDataProvider {
             }
         })
     }
+
 
 }

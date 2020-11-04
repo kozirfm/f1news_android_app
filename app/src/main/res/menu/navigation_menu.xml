@@ -2,10 +2,13 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
+        android:id="@+id/newsMenuItem"
         android:icon="@drawable/ic_outline_event_note_24"
         android:title="@string/news"
         app:showAsAction="ifRoom" />
-    <item android:icon="@drawable/ic_outline_emoji_events_24"
+    <item
+        android:id="@+id/championshipMenuItem"
+        android:icon="@drawable/ic_outline_emoji_events_24"
         android:title="@string/championship"
         app:showAsAction="ifRoom"
         />

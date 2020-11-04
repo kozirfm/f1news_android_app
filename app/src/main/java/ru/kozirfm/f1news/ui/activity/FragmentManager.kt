@@ -1,14 +1,14 @@
 package ru.kozirfm.f1news.ui.activity
 
-import androidx.fragment.app.Fragment
+import ru.kozirfm.f1news.ui.fragments.BaseFragment
 
 object FragmentManager {
 
-    var changeFragmentManager: MainActivity? = null
+    var fragmentManagerChanger: MainActivity? = null
 
-    fun replaceFragment(fragment: Fragment, tag: String? = null) =
-        changeFragmentManager?.replaceFragment(fragment, tag)
+    fun replaceFragment(fragment: BaseFragment) =
+        fragmentManagerChanger?.replaceFragment(fragment)
 
-    fun finishFragment() = changeFragmentManager?.finishFragment()
+    fun finishFragment() = fragmentManagerChanger?.finishFragment()
 
 }
