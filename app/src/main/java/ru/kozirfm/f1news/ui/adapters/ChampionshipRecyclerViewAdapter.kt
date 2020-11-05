@@ -6,7 +6,6 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.item_championship_table.view.*
 import ru.kozirfm.f1news.R
-import ru.kozirfm.f1news.data.entites.Article
 import ru.kozirfm.f1news.data.entites.Driver
 
 class ChampionshipRecyclerViewAdapter :
@@ -34,9 +33,10 @@ class ChampionshipRecyclerViewAdapter :
     }
 
     inner class ChampionshipViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        fun bind(driver: Driver) = with(itemView){
+        fun bind(driver: Driver) = with(itemView) {
             positionChampionshipTableTextView.text = String.format("%02d", driver.position)
-            fullNameChampionshipTableTextView.text = String.format("%s %s", driver.name, driver.surname)
+            fullNameChampionshipTableTextView.text =
+                String.format("%s %s", driver.name, driver.surname)
             teamChampionshipTableTextView.text = driver.team
             pointsChampionshipTableTextView.text = String.format("%d", driver.points)
         }

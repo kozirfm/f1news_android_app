@@ -33,12 +33,18 @@ class MainActivity : AppCompatActivity(), FragmentManagerChanger {
                     replaceFragment(fragment = championshipFragment)
                     return@setOnNavigationItemSelectedListener true
                 }
-                else -> return@setOnNavigationItemSelectedListener false
+                else -> throw IndexOutOfBoundsException("Error")
             }
         }
     }
 
     override fun replaceFragment(fragment: BaseFragment) {
+
+        when (fragment) {
+            newsFragment -> bottomNavigationView.menu.findItem(R.id.newsMenuItem).isChecked = true
+            championshipFragment -> bottomNavigationView.menu.findItem(R.id.championshipMenuItem).isChecked = true
+        }
+
         if (bottomMenuBackStack.contains(fragment)) {
             bottomMenuBackStack.remove(fragment)
             bottomMenuBackStack.add(fragment)

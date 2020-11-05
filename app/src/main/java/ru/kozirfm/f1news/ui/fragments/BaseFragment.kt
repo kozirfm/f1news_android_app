@@ -18,7 +18,6 @@ abstract class BaseFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        super.onCreateView(inflater, container, savedInstanceState)
         return inflater.inflate(fragmentLayout, container, false)
     }
 
