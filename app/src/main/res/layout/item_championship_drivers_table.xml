@@ -11,28 +11,28 @@
         android:paddingVertical="16dp">
 
         <TextView
-            android:id="@+id/positionChampionshipTableTextView"
+            android:id="@+id/positionChampionshipDriverTableTextView"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center" />
 
         <TextView
-            android:id="@+id/fullNameChampionshipTableTextView"
+            android:id="@+id/fullNameChampionshipDriverTableTextView"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="3"
             android:gravity="center" />
 
         <TextView
-            android:id="@+id/teamChampionshipTableTextView"
+            android:id="@+id/teamChampionshipDriverTableTextView"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="2"
             android:gravity="center" />
 
         <TextView
-            android:id="@+id/pointsChampionshipTableTextView"
+            android:id="@+id/pointsChampionshipDriverTableTextView"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"

@@ -9,14 +9,13 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.fragment_news.*
 import ru.kozirfm.f1news.R
 import ru.kozirfm.f1news.ui.activity.FragmentManager
-import ru.kozirfm.f1news.ui.adapters.ArticlesRecyclerViewAdapter
+import ru.kozirfm.f1news.ui.adapters.NewsRecyclerViewAdapter
 import ru.kozirfm.f1news.ui.viewmodels.NewsViewModel
 import ru.kozirfm.f1news.ui.viewstates.NewsViewState
 
 class NewsFragment : BaseFragment() {
 
     private val newsViewModel: NewsViewModel by lazy { ViewModelProvider(this).get(NewsViewModel::class.java) }
-    private val articlesRecyclerViewAdapter: ArticlesRecyclerViewAdapter by lazy { ArticlesRecyclerViewAdapter() }
 
     override val bottomNavigationVisibility: Int = View.VISIBLE
     override val fragmentLayout: Int = R.layout.fragment_news
@@ -24,6 +23,17 @@ class NewsFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        val articlesRecyclerViewAdapter = NewsRecyclerViewAdapter { text ->
+            val args = Bundle()
+            args.putString(NewsTextBottomSheetDialogFragment.NEWS_TEXT_ARGUMENTS, text)
+            val bottomSheetDialogFragment = NewsTextBottomSheetDialogFragment()
+            bottomSheetDialogFragment.arguments = args
+            bottomSheetDialogFragment.show(
+                requireActivity().supportFragmentManager, tag
+            )
+        }
+
         mainActivityToolbar.setOnMenuItemClickListener {
             when (it.itemId) {
                 R.id.signInMenuItem -> {

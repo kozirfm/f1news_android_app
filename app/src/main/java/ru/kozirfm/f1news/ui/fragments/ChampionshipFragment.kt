@@ -3,11 +3,13 @@ package ru.kozirfm.f1news.ui.fragments
 import android.os.Bundle
 import android.view.View
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import kotlinx.android.synthetic.main.fragment_championship.*
 import ru.kozirfm.f1news.R
 import ru.kozirfm.f1news.ui.adapters.ChampionshipViewPagerAdapter
+import ru.kozirfm.f1news.ui.viewmodels.ChampionshipViewModel
 
 class ChampionshipFragment : BaseFragment() {
 
@@ -15,11 +17,26 @@ class ChampionshipFragment : BaseFragment() {
     override val fragmentLayout: Int = R.layout.fragment_championship
     override val fragmentTag: String = ChampionshipFragment::class.java.name + "TAG"
 
+    private val championshipViewModel by lazy {
+        ViewModelProvider(this).get(
+            ChampionshipViewModel::class.java
+        )
+    }
+
+    private val championshipTeamFragment by lazy { ChampionshipTeamFragment(championshipViewModel) }
+    private val championshipDriversFragment by lazy {
+        ChampionshipDriversFragment(
+            championshipViewModel
+        )
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        val championshipViewPagerAdapter = ChampionshipViewPagerAdapter(this)
         viewPager.isSaveEnabled = false
-        viewPager.adapter = ChampionshipViewPagerAdapter(this)
+        viewPager.adapter = championshipViewPagerAdapter
+        championshipViewPagerAdapter.pages =
+            listOf(championshipDriversFragment, championshipTeamFragment)
 
         TabLayoutMediator(
             changeChampionshipTableTabLayout,

@@ -9,6 +9,6 @@ import ru.kozirfm.f1news.data.providers.ServerDataProvider
 object Repository {
     private val remoteDataProvider: RemoteDataProvider = ServerDataProvider()
     fun getArticles(count: Int): LiveData<ServerResult> = remoteDataProvider.getArticles(count)
-    fun getDriversChampionshipTable(): LiveData<ServerResult> = remoteDataProvider.getDriversChampionshipTable()
+    fun getTeams(): LiveData<ServerResult> = remoteDataProvider.getTeams()
     fun addUser(user: User) = remoteDataProvider.addUser(user)
 }
