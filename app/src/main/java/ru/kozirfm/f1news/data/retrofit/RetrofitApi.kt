@@ -11,7 +11,6 @@ class RetrofitApi {
         val factory = GsonConverterFactory.create(gson)
 
         return Retrofit.Builder()
-//            .baseUrl("http://192.168.31.61:5050")
             .baseUrl("http://178.67.241.159")
             .addConverterFactory(factory)
             .build()

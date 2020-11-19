@@ -9,25 +9,18 @@
     android:orientation="vertical"
     tools:context=".ui.activity.MainActivity">
 
-    <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/appBarLayout"
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/mainActivityToolbar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@android:color/white">
-
-        <com.google.android.material.appbar.MaterialToolbar
-            android:id="@+id/mainActivityToolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            app:menu="@menu/news_fragment_menu"
-            app:title="@string/news" />
-
-    </com.google.android.material.appbar.AppBarLayout>
+        android:layout_height="?actionBarSize"
+        android:background="@android:color/white"
+        android:elevation="4dp"
+        app:menu="@menu/news_fragment_menu"
+        app:title="@string/news" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/articlesRecyclerView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginVertical="4dp" />
+        android:layout_height="match_parent"/>
 
 </LinearLayout>

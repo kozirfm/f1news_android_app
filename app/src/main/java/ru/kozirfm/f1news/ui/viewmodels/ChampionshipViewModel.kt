@@ -26,7 +26,6 @@ class ChampionshipViewModel : ViewModel() {
                 teams.forEach { team ->
                     drivers.addAll(team.drivers)
                 }
-                teams.sortedByDescending { team -> team.points }
                 drivers.sortBy { driver -> driver.position }
                 viewState.value = ChampionshipViewState.ShowDrivers(drivers)
                 viewState.value = ChampionshipViewState.ShowTeams(teams)
@@ -40,7 +39,7 @@ class ChampionshipViewModel : ViewModel() {
     }
 
     override fun onCleared() {
-        repositoryChampionship.removeObserver(championshipObserver)
         super.onCleared()
+        repositoryChampionship.removeObserver(championshipObserver)
     }
 }

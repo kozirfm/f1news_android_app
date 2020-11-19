@@ -6,7 +6,7 @@ data class User(
     @Expose
     val username: String,
     @Expose
-    val password: String,
+    val email: String,
     @Expose
-    val email: String
+    val password: String
 )

@@ -33,7 +33,7 @@ class ChampionshipTeamFragment(private val championshipViewModel: ChampionshipVi
         championshipTeamRecyclerView.adapter = championshipTeamsRecyclerViewAdapter
         championshipTeamRecyclerView.setHasFixedSize(true)
 
-        championshipViewModel.viewState.observe(this) { viewState ->
+        championshipViewModel.viewState.observe(viewLifecycleOwner) { viewState ->
             when (viewState) {
                 is ChampionshipViewState.ShowTeams -> viewState.teams?.let {
                     championshipTeamsRecyclerViewAdapter.teamsTable = it

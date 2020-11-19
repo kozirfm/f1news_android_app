@@ -34,11 +34,6 @@ class ServerDataProvider : RemoteDataProvider {
         val resultLiveData = MutableLiveData<ServerResult>()
         api.getTeams().enqueue(object : Callback<List<Team>> {
             override fun onResponse(call: Call<List<Team>>, response: Response<List<Team>>) {
-                response.body()?.forEach { team ->
-                    team.drivers.forEach {
-                        team.points += it.points
-                    }
-                }
                 resultLiveData.value = ServerResult.Success(response.body())
             }
 

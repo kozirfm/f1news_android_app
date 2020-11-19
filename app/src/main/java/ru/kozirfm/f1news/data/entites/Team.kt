@@ -7,5 +7,6 @@ data class Team(
     val drivers: List<Driver>,
     @Expose
     val name: String,
+    @Expose
     var points: Int
 )

@@ -5,7 +5,8 @@ import android.view.View
 import androidx.lifecycle.ViewModelProvider
 import kotlinx.android.synthetic.main.fragment_registration.*
 import ru.kozirfm.f1news.R
-import ru.kozirfm.f1news.ui.activity.FragmentManager
+import ru.kozirfm.f1news.data.entites.User
+import ru.kozirfm.f1news.data.repositories.Repository
 import ru.kozirfm.f1news.ui.viewmodels.RegistrationViewModel
 
 class RegistrationFragment : BaseFragment() {
@@ -22,8 +23,15 @@ class RegistrationFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        registrationActivityToolbar.setNavigationOnClickListener {
-            FragmentManager.finishFragment()
+
+        sendRegistrationDataButton.setOnClickListener {
+            Repository.addUser(
+                User(
+                    registrationUsernameEditText.text.toString(),
+                    registrationEmailEditText.text.toString(),
+                    registrationPasswordEditText.text.toString()
+                )
+            )
         }
     }
 }
