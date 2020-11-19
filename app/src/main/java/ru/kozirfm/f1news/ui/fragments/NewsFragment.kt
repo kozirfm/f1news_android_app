@@ -15,11 +15,8 @@ import ru.kozirfm.f1news.ui.viewstates.NewsViewState
 class NewsFragment : BaseFragment() {
 
     private val newsViewModel: NewsViewModel by lazy { ViewModelProvider(this).get(NewsViewModel::class.java) }
-
     override val bottomNavigationVisibility: Int = View.VISIBLE
-
     override val fragmentLayout: Int = R.layout.fragment_news
-    override val fragmentTag: String = NewsFragment::class.java.name + "TAG"
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

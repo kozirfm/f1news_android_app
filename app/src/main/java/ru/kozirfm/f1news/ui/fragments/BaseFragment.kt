@@ -11,7 +11,6 @@ abstract class BaseFragment : Fragment() {
 
     abstract val bottomNavigationVisibility: Int
     abstract val fragmentLayout: Int
-    abstract val fragmentTag: String
 
     override fun onCreateView(
         inflater: LayoutInflater,

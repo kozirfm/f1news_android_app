@@ -15,7 +15,6 @@ class ChampionshipFragment : BaseFragment() {
 
     override val bottomNavigationVisibility: Int = View.VISIBLE
     override val fragmentLayout: Int = R.layout.fragment_championship
-    override val fragmentTag: String = ChampionshipFragment::class.java.name + "TAG"
 
     private val championshipViewModel by lazy {
         ViewModelProvider(this).get(

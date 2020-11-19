@@ -7,6 +7,5 @@ class AuthorizationFragment : BaseFragment() {
 
     override val bottomNavigationVisibility: Int = View.GONE
     override val fragmentLayout: Int = R.layout.fragment_authorization
-    override val fragmentTag: String = AuthorizationFragment::class.java.name + "TAG"
 
 }
