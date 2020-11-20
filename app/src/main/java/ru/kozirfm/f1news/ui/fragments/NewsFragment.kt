@@ -5,6 +5,7 @@ import android.view.Gravity
 import android.view.View
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.fragment_news.*
 import ru.kozirfm.f1news.R
@@ -29,6 +30,16 @@ class NewsFragment : BaseFragment() {
             bottomSheetDialogFragment.show(
                 requireActivity().supportFragmentManager, tag
             )
+        }
+
+        mainActivityToolbar.setOnMenuItemClickListener {
+            when (it.itemId) {
+                R.id.signInMenuItem -> {
+                    findNavController().navigate(R.id.action_nav_news_to_authorizationFragment)
+                    return@setOnMenuItemClickListener true
+                }
+                else -> return@setOnMenuItemClickListener false
+            }
         }
 
         articlesRecyclerView.layoutManager =

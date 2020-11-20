@@ -19,7 +19,8 @@
         android:id="@+id/nav_championship"
         android:name="ru.kozirfm.f1news.ui.fragments.ChampionshipFragment"
         android:label="ChampionshipFragment"
-        tools:layout="@layout/fragment_championship" />
+        tools:layout="@layout/fragment_championship"
+        />
 
     <fragment
         android:id="@+id/authorizationFragment"
@@ -28,7 +29,8 @@
         tools:layout="@layout/fragment_authorization">
         <action
             android:id="@+id/action_authorizationFragment_to_registrationFragment"
-            app:destination="@id/registrationFragment" />
+            app:destination="@id/registrationFragment"
+            app:popUpTo="@id/nav_news" />
     </fragment>
 
     <fragment
