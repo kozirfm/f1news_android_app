@@ -6,6 +6,7 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:textColor">@android:color/black</item>
+        <item name="android:fitsSystemWindows">false</item>
     </style>
 
     <style name="BottomSheetDialogTheme" parent="Theme.MaterialComponents.Light.BottomSheetDialog">
@@ -15,6 +16,10 @@
     <style name="BottomSheetStyle" parent="Widget.Design.BottomSheet.Modal">
         <item name="android:background">@android:color/transparent</item>
         <item name="behavior_skipCollapsed">true</item>
+    </style>
+
+    <style name="TextAppearance.Transparent" parent="TextAppearance.AppCompat">
+        <item name="android:textColor">@android:color/transparent</item>
     </style>
 
 </resources>
