@@ -9,6 +9,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.fragment_news.*
 import ru.kozirfm.f1news.R
+import ru.kozirfm.f1news.data.model.ArticleMapper
 import ru.kozirfm.f1news.ui.adapters.NewsRecyclerViewAdapter
 import ru.kozirfm.f1news.ui.viewmodels.NewsViewModel
 import ru.kozirfm.f1news.ui.viewstates.NewsViewState
@@ -49,8 +50,9 @@ class NewsFragment : BaseFragment() {
 
         newsViewModel.viewState.observe(viewLifecycleOwner) { viewState ->
             when (viewState) {
-                is NewsViewState.ShowArticles -> viewState.articles?.let {
-                    articlesRecyclerViewAdapter.articles = it
+                is NewsViewState.ShowArticles -> viewState.articles?.let { articles ->
+                    articlesRecyclerViewAdapter.news =
+                        articles.map { ArticleMapper().mapArticlesToNews(it) }
                 }
                 is NewsViewState.ShowError -> {
                     val errorToast: Toast = Toast.makeText(

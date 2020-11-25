@@ -15,8 +15,14 @@
         android:orientation="vertical"
         android:padding="8dp">
 
+        <ImageView
+            android:id="@+id/articleImageView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:ignore="ContentDescription" />
+
         <TextView
-            android:id="@+id/articleTitleTextView"
+            android:id="@+id/articleImageTitleTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="18sp" />
@@ -28,7 +34,7 @@
             android:background="@android:color/darker_gray" />
 
         <TextView
-            android:id="@+id/articleDateTextView"
+            android:id="@+id/articleImageDateTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="12sp"

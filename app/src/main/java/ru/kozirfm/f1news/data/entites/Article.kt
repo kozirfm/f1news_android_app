@@ -12,4 +12,7 @@ data class Article(
     @Expose
     val link: String,
     @Expose
-    val text: String)
+    val text: String,
+    @Expose
+    val images: List<String>?
+)
