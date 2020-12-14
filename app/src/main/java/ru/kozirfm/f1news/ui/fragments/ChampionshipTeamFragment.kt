@@ -6,10 +6,14 @@ import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.fragment_championship_team.*
 import ru.kozirfm.f1news.R
+import ru.kozirfm.f1news.data.entites.Team
 import ru.kozirfm.f1news.ui.adapters.ChampionshipTeamsRecyclerViewAdapter
 import ru.kozirfm.f1news.ui.viewmodels.ChampionshipViewModel
-import ru.kozirfm.f1news.ui.viewstates.ChampionshipViewState
+import ru.kozirfm.f1news.ui.viewstates.Data
+import ru.kozirfm.f1news.ui.viewstates.Error
+import ru.kozirfm.f1news.ui.viewstates.Loading
 
+@Suppress("UNCHECKED_CAST")
 class ChampionshipTeamFragment(private val championshipViewModel: ChampionshipViewModel) :
     BaseFragment() {
 
@@ -27,10 +31,11 @@ class ChampionshipTeamFragment(private val championshipViewModel: ChampionshipVi
 
         championshipViewModel.viewState.observe(viewLifecycleOwner) { viewState ->
             when (viewState) {
-                is ChampionshipViewState.ShowTeams -> viewState.teams?.let {
-                    championshipTeamsRecyclerViewAdapter.teamsTable = it
+                is Loading -> TODO()
+                is Data<*> -> viewState.data?.let {
+                    championshipTeamsRecyclerViewAdapter.teamsTable = it as List<Team>
                 }
-                is ChampionshipViewState.ShowError -> Toast.makeText(
+                is Error -> Toast.makeText(
                     requireContext(),
                     "${viewState.t}",
                     Toast.LENGTH_SHORT

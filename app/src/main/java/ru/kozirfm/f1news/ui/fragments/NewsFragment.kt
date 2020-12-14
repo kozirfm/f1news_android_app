@@ -1,31 +1,39 @@
 package ru.kozirfm.f1news.ui.fragments
 
 import android.os.Bundle
-import android.view.Gravity
 import android.view.View
-import android.widget.Toast
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import androidx.paging.map
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.fragment_news.*
 import ru.kozirfm.f1news.R
+import ru.kozirfm.f1news.data.entites.NewsSimple
+import ru.kozirfm.f1news.data.entites.NewsWithImage
 import ru.kozirfm.f1news.data.model.ArticleMapper
-import ru.kozirfm.f1news.ui.adapters.NewsRecyclerViewAdapter
+import ru.kozirfm.f1news.ui.adapters.NewsAdapter
 import ru.kozirfm.f1news.ui.viewmodels.NewsViewModel
-import ru.kozirfm.f1news.ui.viewstates.NewsViewState
 
 class NewsFragment : BaseFragment() {
 
-    private val newsViewModel: NewsViewModel by lazy { ViewModelProvider(this).get(NewsViewModel::class.java) }
+    private val newsViewModel by viewModels<NewsViewModel>()
     override val bottomNavigationVisibility: Int = View.VISIBLE
     override val fragmentLayout: Int = R.layout.fragment_news
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        val articlesRecyclerViewAdapter = NewsRecyclerViewAdapter { text ->
-            val args = Bundle()
-            args.putString(NewsTextBottomSheetDialogFragment.NEWS_TEXT_ARGUMENTS, text)
+        val args = Bundle()
+        val adapter = NewsAdapter { news ->
+            when (news) {
+                is NewsSimple -> args.putString(
+                    NewsTextBottomSheetDialogFragment.NEWS_TEXT_ARGUMENTS,
+                    news.text
+                )
+                is NewsWithImage -> args.putString(
+                    NewsTextBottomSheetDialogFragment.NEWS_TEXT_ARGUMENTS,
+                    news.text
+                )
+            }
             val bottomSheetDialogFragment = NewsTextBottomSheetDialogFragment()
             bottomSheetDialogFragment.arguments = args
             bottomSheetDialogFragment.show(
@@ -42,28 +50,14 @@ class NewsFragment : BaseFragment() {
                 else -> return@setOnMenuItemClickListener false
             }
         }
-
         articlesRecyclerView.layoutManager =
             LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
-        articlesRecyclerView.adapter = articlesRecyclerViewAdapter
-        articlesRecyclerView.hasFixedSize()
+        articlesRecyclerView.setHasFixedSize(true)
+        articlesRecyclerView.adapter = adapter
 
-        newsViewModel.viewState.observe(viewLifecycleOwner) { viewState ->
-            when (viewState) {
-                is NewsViewState.ShowArticles -> viewState.articles?.let { articles ->
-                    articlesRecyclerViewAdapter.news =
-                        articles.map { ArticleMapper().mapArticlesToNews(it) }
-                }
-                is NewsViewState.ShowError -> {
-                    val errorToast: Toast = Toast.makeText(
-                        requireContext(),
-                        getString(R.string.server_error),
-                        Toast.LENGTH_SHORT
-                    )
-                    errorToast.setGravity(Gravity.CENTER, 0, 0)
-                    errorToast.show()
-                }
-            }
+        newsViewModel.repositoryNews.observe(viewLifecycleOwner) { articles ->
+            val news = articles.map { ArticleMapper.mapArticlesToNews(it) }
+            adapter.submitData(viewLifecycleOwner.lifecycle, news)
         }
     }
 }

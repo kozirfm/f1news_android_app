@@ -6,10 +6,15 @@ import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.fragment_championship_drivers.*
 import ru.kozirfm.f1news.R
+import ru.kozirfm.f1news.data.entites.Driver
+import ru.kozirfm.f1news.data.entites.Team
 import ru.kozirfm.f1news.ui.adapters.ChampionshipDriversRecyclerViewAdapter
 import ru.kozirfm.f1news.ui.viewmodels.ChampionshipViewModel
-import ru.kozirfm.f1news.ui.viewstates.ChampionshipViewState
+import ru.kozirfm.f1news.ui.viewstates.Data
+import ru.kozirfm.f1news.ui.viewstates.Error
+import ru.kozirfm.f1news.ui.viewstates.Loading
 
+@Suppress("UNCHECKED_CAST")
 class ChampionshipDriversFragment(private val championshipViewModel: ChampionshipViewModel) :
     BaseFragment() {
 
@@ -27,10 +32,16 @@ class ChampionshipDriversFragment(private val championshipViewModel: Championshi
 
         championshipViewModel.viewState.observe(viewLifecycleOwner) { viewState ->
             when (viewState) {
-                is ChampionshipViewState.ShowDrivers -> viewState.drivers?.let {
-                    championshipRecyclerViewAdapter.driversTable = it
+                is Loading -> TODO()
+                is Data<*> -> viewState.data?.let {
+                    val drivers = ArrayList<Driver>()
+                    (it as List<Team>).forEach { team ->
+                        drivers.addAll(team.drivers)
+                    }
+                    drivers.sortBy { driver -> driver.position }
+                    championshipRecyclerViewAdapter.driversTable = drivers
                 }
-                is ChampionshipViewState.ShowError -> Toast.makeText(
+                is Error -> Toast.makeText(
                     requireContext(),
                     "${viewState.t}",
                     Toast.LENGTH_SHORT

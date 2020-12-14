@@ -3,12 +3,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/nav_news"
-        android:icon="@drawable/ic_outline_event_note_24"
+        android:icon="@drawable/ic_bottom_navigation_news"
         android:title="@string/news"
         app:showAsAction="ifRoom" />
     <item
         android:id="@+id/nav_championship"
-        android:icon="@drawable/ic_outline_emoji_events_24"
+        android:icon="@drawable/ic_bottom_navigation_championship"
         android:title="@string/championship"
         app:showAsAction="ifRoom"
         />

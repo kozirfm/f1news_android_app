@@ -2,11 +2,13 @@ package ru.kozirfm.f1news.data.model
 
 import ru.kozirfm.f1news.data.entites.Article
 import ru.kozirfm.f1news.data.entites.News
+import ru.kozirfm.f1news.data.entites.NewsSimple
+import ru.kozirfm.f1news.data.entites.NewsWithImage
 
-class ArticleMapper {
+object ArticleMapper {
     fun mapArticlesToNews(article: Article): News {
         return when {
-            article.images != null -> News.NewsWithImage(
+            article.images != null -> NewsWithImage(
                 id = article.id,
                 date = article.date,
                 title = article.title,
@@ -14,7 +16,7 @@ class ArticleMapper {
                 text = article.text,
                 images = article.images
             )
-            else -> News.NewsSimple(
+            else -> NewsSimple(
                 id = article.id,
                 date = article.date,
                 title = article.title,

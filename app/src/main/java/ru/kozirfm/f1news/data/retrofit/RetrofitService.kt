@@ -1,6 +1,7 @@
 package ru.kozirfm.f1news.data.retrofit
 
 import retrofit2.Call
+import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
@@ -12,6 +13,9 @@ import ru.kozirfm.f1news.data.entites.User
 interface RetrofitService {
     @GET(".")
     fun getArticles(@Query("count") count: Int): Call<List<Article>>
+
+    @GET(".")
+    suspend fun getArticlesPage(@Query("page") page: Int): List<Article>
 
     @GET("championship/")
     fun getTeams(): Call<List<Team>>

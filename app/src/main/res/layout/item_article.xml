@@ -19,7 +19,8 @@
             android:id="@+id/articleTitleTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="18sp" />
+            android:textSize="18sp"
+            tools:text="@tools:sample/lorem"/>
 
         <View
             android:layout_width="match_parent"
@@ -32,7 +33,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="12sp"
-            tools:text="01 января 2000" />
+            tools:text="@tools:sample/date/ddmmyy" />
 
     </LinearLayout>
 
