@@ -4,36 +4,39 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
-import kotlinx.android.synthetic.main.fragment_championship_team.*
+import kotlinx.android.synthetic.main.fragment_championship_teams.*
 import ru.kozirfm.f1news.R
 import ru.kozirfm.f1news.data.entites.Team
 import ru.kozirfm.f1news.ui.adapters.ChampionshipTeamsRecyclerViewAdapter
 import ru.kozirfm.f1news.ui.viewmodels.ChampionshipViewModel
 import ru.kozirfm.f1news.ui.viewstates.Data
 import ru.kozirfm.f1news.ui.viewstates.Error
-import ru.kozirfm.f1news.ui.viewstates.Loading
 
 @Suppress("UNCHECKED_CAST")
-class ChampionshipTeamFragment(private val championshipViewModel: ChampionshipViewModel) :
+class ChampionshipTeamsFragment(private val championshipViewModel: ChampionshipViewModel) :
     BaseFragment() {
 
     override val bottomNavigationVisibility: Int = View.VISIBLE
-    override val fragmentLayout: Int = R.layout.fragment_championship_team
+    override val fragmentLayout: Int = R.layout.fragment_championship_teams
+    override val recyclerView: Int = R.id.championshipTeamsRecyclerView
+    override val progressBar: Int = R.id.championshipTeamsProgressBar
 
     private val championshipTeamsRecyclerViewAdapter by lazy { ChampionshipTeamsRecyclerViewAdapter() }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        championshipTeamRecyclerView.layoutManager =
+        championshipTeamsRecyclerView.layoutManager =
             LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
-        championshipTeamRecyclerView.adapter = championshipTeamsRecyclerViewAdapter
-        championshipTeamRecyclerView.setHasFixedSize(true)
+        championshipTeamsRecyclerView.adapter = championshipTeamsRecyclerViewAdapter
+        championshipTeamsRecyclerView.setHasFixedSize(true)
 
-        championshipViewModel.viewState.observe(viewLifecycleOwner) { viewState ->
+        championshipViewModel.getData().observe(viewLifecycleOwner) { viewState ->
             when (viewState) {
-                is Loading -> TODO()
-                is Data<*> -> viewState.data?.let {
-                    championshipTeamsRecyclerViewAdapter.teamsTable = it as List<Team>
+                is Data<*> -> {
+                    viewState.data?.let {
+                        championshipTeamsRecyclerViewAdapter.teamsTable = it as List<Team>
+                    }
+                    stopLoading()
                 }
                 is Error -> Toast.makeText(
                     requireContext(),

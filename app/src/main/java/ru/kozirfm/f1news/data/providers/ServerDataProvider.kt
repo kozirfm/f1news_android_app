@@ -1,7 +1,6 @@
 package ru.kozirfm.f1news.data.providers
 
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
@@ -12,9 +11,6 @@ import retrofit2.Response
 import ru.kozirfm.f1news.data.entites.Article
 import ru.kozirfm.f1news.data.entites.Team
 import ru.kozirfm.f1news.data.entites.User
-import ru.kozirfm.f1news.data.model.Error
-import ru.kozirfm.f1news.data.model.ServerResult
-import ru.kozirfm.f1news.data.model.Success
 import ru.kozirfm.f1news.data.retrofit.RetrofitApi
 
 class ServerDataProvider : RemoteDataProvider {
@@ -29,18 +25,8 @@ class ServerDataProvider : RemoteDataProvider {
         ) { NewsDataSource(api) }.liveData
     }
 
-    override fun getTeams(): LiveData<ServerResult> {
-        val resultLiveData = MutableLiveData<ServerResult>()
-        api.getTeams().enqueue(object : Callback<List<Team>> {
-            override fun onResponse(call: Call<List<Team>>, response: Response<List<Team>>) {
-                resultLiveData.value = Success(response.body())
-            }
-
-            override fun onFailure(call: Call<List<Team>>, t: Throwable) {
-                resultLiveData.value = Error(t)
-            }
-        })
-        return resultLiveData
+    override suspend fun getTeams(): List<Team> {
+        return api.getTeamsAsync().await()
     }
 
     override fun addUser(user: User) {

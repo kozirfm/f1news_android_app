@@ -12,6 +12,8 @@ class RegistrationFragment : BaseFragment() {
 
     override val bottomNavigationVisibility: Int = View.GONE
     override val fragmentLayout: Int = R.layout.fragment_registration
+    override val recyclerView: Int? = null
+    override val progressBar: Int? = null
 
     val registrationViewModel by viewModels<RegistrationViewModel>()
 

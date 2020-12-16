@@ -12,7 +12,6 @@ import ru.kozirfm.f1news.ui.adapters.ChampionshipDriversRecyclerViewAdapter
 import ru.kozirfm.f1news.ui.viewmodels.ChampionshipViewModel
 import ru.kozirfm.f1news.ui.viewstates.Data
 import ru.kozirfm.f1news.ui.viewstates.Error
-import ru.kozirfm.f1news.ui.viewstates.Loading
 
 @Suppress("UNCHECKED_CAST")
 class ChampionshipDriversFragment(private val championshipViewModel: ChampionshipViewModel) :
@@ -20,6 +19,8 @@ class ChampionshipDriversFragment(private val championshipViewModel: Championshi
 
     override val bottomNavigationVisibility: Int = View.VISIBLE
     override val fragmentLayout: Int = R.layout.fragment_championship_drivers
+    override val recyclerView: Int = R.id.championshipDriversRecyclerView
+    override val progressBar: Int = R.id.championshipDriversProgressBar
 
     private val championshipRecyclerViewAdapter by lazy { ChampionshipDriversRecyclerViewAdapter() }
 
@@ -30,16 +31,18 @@ class ChampionshipDriversFragment(private val championshipViewModel: Championshi
         championshipDriversRecyclerView.adapter = championshipRecyclerViewAdapter
         championshipDriversRecyclerView.setHasFixedSize(true)
 
-        championshipViewModel.viewState.observe(viewLifecycleOwner) { viewState ->
+        championshipViewModel.getData().observe(viewLifecycleOwner) { viewState ->
             when (viewState) {
-                is Loading -> TODO()
-                is Data<*> -> viewState.data?.let {
-                    val drivers = ArrayList<Driver>()
-                    (it as List<Team>).forEach { team ->
-                        drivers.addAll(team.drivers)
+                is Data<*> -> {
+                    viewState.data?.let {
+                        val drivers = ArrayList<Driver>()
+                        (it as List<Team>).forEach { team ->
+                            drivers.addAll(team.drivers)
+                        }
+                        drivers.sortBy { driver -> driver.position }
+                        championshipRecyclerViewAdapter.driversTable = drivers
                     }
-                    drivers.sortBy { driver -> driver.position }
-                    championshipRecyclerViewAdapter.driversTable = drivers
+                    stopLoading()
                 }
                 is Error -> Toast.makeText(
                     requireContext(),
@@ -49,5 +52,4 @@ class ChampionshipDriversFragment(private val championshipViewModel: Championshi
             }
         }
     }
-
 }

@@ -1,6 +1,7 @@
 package ru.kozirfm.f1news.data.retrofit
 
 import com.google.gson.GsonBuilder
+import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -21,10 +22,10 @@ class RetrofitApi {
         val factory = GsonConverterFactory.create(gson)
 
         return Retrofit.Builder()
-            //.baseUrl("http://192.168.31.61:5050")
             .baseUrl("http://178.67.241.159")
             .client(client)
             .addConverterFactory(factory)
+            .addCallAdapterFactory(CoroutineCallAdapterFactory())
             .build()
             .create(RetrofitService::class.java)
     }

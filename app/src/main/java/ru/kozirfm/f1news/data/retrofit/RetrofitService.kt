@@ -1,7 +1,7 @@
 package ru.kozirfm.f1news.data.retrofit
 
+import kotlinx.coroutines.Deferred
 import retrofit2.Call
-import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
@@ -18,7 +18,7 @@ interface RetrofitService {
     suspend fun getArticlesPage(@Query("page") page: Int): List<Article>
 
     @GET("championship/")
-    fun getTeams(): Call<List<Team>>
+    fun getTeamsAsync(): Deferred<List<Team>>
 
     @POST("registration/")
     fun registration(@Body user: User): Call<String>

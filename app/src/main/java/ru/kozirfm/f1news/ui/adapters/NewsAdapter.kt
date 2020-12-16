@@ -14,7 +14,7 @@ import ru.kozirfm.f1news.data.entites.News
 import ru.kozirfm.f1news.data.entites.NewsSimple
 import ru.kozirfm.f1news.data.entites.NewsWithImage
 
-class NewsAdapter(val itemClick: (News) -> Unit) :
+class NewsAdapter(private val downloaded: () -> Unit, val itemClick: (News) -> Unit) :
     PagingDataAdapter<News, RecyclerView.ViewHolder>(DIFF_UTIL_CALLBACK) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
@@ -32,6 +32,7 @@ class NewsAdapter(val itemClick: (News) -> Unit) :
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+        downloaded.invoke()
         val currentItem = getItem(position)
         if (currentItem != null) {
             when (holder) {
@@ -75,8 +76,6 @@ class NewsAdapter(val itemClick: (News) -> Unit) :
     companion object {
         private val DIFF_UTIL_CALLBACK = object : DiffUtil.ItemCallback<News>() {
             override fun areItemsTheSame(oldItem: News, newItem: News): Boolean {
-                println(oldItem.javaClass.name)
-                println(newItem.javaClass.name)
                 return oldItem.getItemId() == newItem.getItemId()
             }
 
