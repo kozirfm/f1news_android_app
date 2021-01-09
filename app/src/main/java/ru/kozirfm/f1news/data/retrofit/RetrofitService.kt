@@ -2,10 +2,7 @@ package ru.kozirfm.f1news.data.retrofit
 
 import kotlinx.coroutines.Deferred
 import retrofit2.Call
-import retrofit2.http.Body
-import retrofit2.http.GET
-import retrofit2.http.POST
-import retrofit2.http.Query
+import retrofit2.http.*
 import ru.kozirfm.f1news.data.entites.Article
 import ru.kozirfm.f1news.data.entites.Team
 import ru.kozirfm.f1news.data.entites.User

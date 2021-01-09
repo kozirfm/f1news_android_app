@@ -17,5 +17,4 @@
     <string name="driver">Гонщик</string>
     <string name="team">Команда</string>
     <string name="points">Очки</string>
-    <string name="card_view_behavior">ru.kozirfm.f1news.ui.behavior.CardViewBehavior</string>
 </resources>

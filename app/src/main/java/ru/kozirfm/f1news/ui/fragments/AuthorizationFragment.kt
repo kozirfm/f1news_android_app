@@ -6,12 +6,9 @@ import androidx.navigation.fragment.findNavController
 import kotlinx.android.synthetic.main.fragment_authorization.*
 import ru.kozirfm.f1news.R
 
-class AuthorizationFragment : BaseFragment() {
+class AuthorizationFragment : BaseFragment(R.layout.fragment_authorization) {
 
     override val bottomNavigationVisibility: Int = View.GONE
-    override val fragmentLayout: Int = R.layout.fragment_authorization
-    override val recyclerView: Int? = null
-    override val progressBar: Int? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

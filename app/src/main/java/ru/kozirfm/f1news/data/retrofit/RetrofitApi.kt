@@ -6,6 +6,8 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import retrofit2.create
+import java.util.concurrent.TimeUnit
 
 class RetrofitApi {
     fun requestServer(): RetrofitService {
@@ -13,20 +15,23 @@ class RetrofitApi {
         val httpLoggingInterceptor =
             HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
 
-        val client = OkHttpClient()
-            .newBuilder()
-            .addInterceptor(httpLoggingInterceptor)
+        val okHttpClient = OkHttpClient.Builder()
+            .connectTimeout(10, TimeUnit.SECONDS)
+            .writeTimeout(30, TimeUnit.SECONDS)
+            .readTimeout(30, TimeUnit.SECONDS)
+            .addInterceptor(MainInterceptor())
+            .addNetworkInterceptor(httpLoggingInterceptor)
             .build()
 
         val gson = GsonBuilder().excludeFieldsWithoutExposeAnnotation().create()
         val factory = GsonConverterFactory.create(gson)
 
         return Retrofit.Builder()
-            .baseUrl("http://178.67.241.159")
-            .client(client)
+            .baseUrl("http://78.37.150.225")
+            .client(okHttpClient)
             .addConverterFactory(factory)
             .addCallAdapterFactory(CoroutineCallAdapterFactory())
             .build()
-            .create(RetrofitService::class.java)
+            .create()
     }
 }

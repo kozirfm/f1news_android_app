@@ -14,7 +14,7 @@ import ru.kozirfm.f1news.data.entites.News
 import ru.kozirfm.f1news.data.entites.NewsSimple
 import ru.kozirfm.f1news.data.entites.NewsWithImage
 
-class NewsAdapter(private val downloaded: () -> Unit, val itemClick: (News) -> Unit) :
+class NewsAdapter(val itemClick: (News) -> Unit) :
     PagingDataAdapter<News, RecyclerView.ViewHolder>(DIFF_UTIL_CALLBACK) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
@@ -32,7 +32,6 @@ class NewsAdapter(private val downloaded: () -> Unit, val itemClick: (News) -> U
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        downloaded.invoke()
         val currentItem = getItem(position)
         if (currentItem != null) {
             when (holder) {
@@ -65,7 +64,11 @@ class NewsAdapter(private val downloaded: () -> Unit, val itemClick: (News) -> U
         fun bind(news: NewsWithImage) = with(itemView) {
             articleImageTitleTextView.text = news.title
             articleImageDateTextView.text = news.date
-            articleImageView.load(news.images[0])
+            articleImageView.load(news.images[0]){
+                crossfade(true)
+//                transformations(CircleCropTransformation())
+//                placeholder(R.drawable.f1_avatar)
+            }
 
             itemView.setOnClickListener {
                 itemClick.invoke(news)

@@ -8,12 +8,9 @@ import kotlinx.android.synthetic.main.fragment_registration.*
 import ru.kozirfm.f1news.R
 import ru.kozirfm.f1news.ui.viewmodels.RegistrationViewModel
 
-class RegistrationFragment : BaseFragment() {
+class RegistrationFragment : BaseFragment(R.layout.fragment_registration) {
 
     override val bottomNavigationVisibility: Int = View.GONE
-    override val fragmentLayout: Int = R.layout.fragment_registration
-    override val recyclerView: Int? = null
-    override val progressBar: Int? = null
 
     val registrationViewModel by viewModels<RegistrationViewModel>()
 

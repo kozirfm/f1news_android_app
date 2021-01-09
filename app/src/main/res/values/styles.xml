@@ -21,6 +21,9 @@
     <style name="TextAppearance.Transparent" parent="TextAppearance.AppCompat">
         <item name="android:textColor">@android:color/transparent</item>
     </style>
+    <style name="TextAppearance" parent="TextAppearance.AppCompat">
+        <item name="android:textColor">@android:color/black</item>
+    </style>
 
     <style name="AppTheme.New">
         <item name="colorPrimary">@android:color/black</item>

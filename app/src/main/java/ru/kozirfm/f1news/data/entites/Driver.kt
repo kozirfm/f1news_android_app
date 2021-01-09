@@ -1,7 +1,10 @@
 package ru.kozirfm.f1news.data.entites
 
+import android.os.Parcelable
 import com.google.gson.annotations.Expose
+import kotlinx.android.parcel.Parcelize
 
+@Parcelize
 data class Driver(
     @Expose
     val position: Int,
@@ -12,4 +15,4 @@ data class Driver(
     @Expose
     val team: String,
     @Expose
-    val points: Int)
+    val points: Int): Parcelable
