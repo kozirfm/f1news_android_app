@@ -1,6 +1,7 @@
 package ru.kozirfm.f1news.di
 
 import androidx.lifecycle.MutableLiveData
+import kotlinx.serialization.ExperimentalSerializationApi
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 import ru.kozirfm.f1news.data.providers.RemoteDataProvider
@@ -10,6 +11,7 @@ import ru.kozirfm.f1news.ui.viewmodels.ChampionshipViewModel
 import ru.kozirfm.f1news.ui.viewmodels.NewsViewModel
 import ru.kozirfm.f1news.ui.viewstates.ViewState
 
+@ExperimentalSerializationApi
 val appModule = module {
     single { RetrofitApi().requestServer() }
     single<RemoteDataProvider> { DataProvider(api = get()) }

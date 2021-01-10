@@ -4,6 +4,8 @@ import android.os.Bundle
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.fragment_championship_teams.*
+import kotlinx.serialization.decodeFromString
+import kotlinx.serialization.json.Json
 import ru.kozirfm.f1news.R
 import ru.kozirfm.f1news.data.entites.Team
 import ru.kozirfm.f1news.ui.adapters.ChampionshipTeamsRecyclerViewAdapter
@@ -22,8 +24,7 @@ class ChampionshipTeamsFragment :
             LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
         championshipTeamsRecyclerView.adapter = championshipTeamsRecyclerViewAdapter
         championshipTeamsRecyclerView.setHasFixedSize(true)
-        championshipTeamsRecyclerViewAdapter.teamsTable =
-            arguments?.getParcelableArrayList<Team>("Team") as ArrayList<Team>
+        arguments?.getString("Team")?.let { Json.decodeFromString<List<Team>>(string = it) }
+            ?.let { championshipTeamsRecyclerViewAdapter.teamsTable = it}
     }
-
 }

@@ -6,6 +6,8 @@ import android.widget.Toast
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import kotlinx.android.synthetic.main.fragment_championship.*
+import kotlinx.serialization.encodeToString
+import kotlinx.serialization.json.Json
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import ru.kozirfm.f1news.R
 import ru.kozirfm.f1news.data.entites.Team
@@ -34,14 +36,14 @@ class ChampionshipFragment : BaseFragment(R.layout.fragment_championship) {
                 is Data<*> -> {
                     viewState.data?.let {
                         championshipTeamsFragment.arguments = Bundle()
-                        championshipTeamsFragment.arguments?.putParcelableArrayList(
+                        championshipTeamsFragment.arguments?.putString(
                             "Team",
-                            ArrayList(it as List<Team>)
+                            Json.encodeToString(it as List<Team>)
                         )
                         championshipDriversFragment.arguments = Bundle()
-                        championshipDriversFragment.arguments?.putParcelableArrayList(
+                        championshipDriversFragment.arguments?.putString(
                             "Driver",
-                            ArrayList((it as List<Team>).flatMap { team -> team.drivers }
+                            Json.encodeToString((it as List<Team>).flatMap { team -> team.drivers }
                                 .sortedBy { driver -> driver.position })
                         )
                     }
@@ -57,7 +59,7 @@ class ChampionshipFragment : BaseFragment(R.layout.fragment_championship) {
                 ).show()
             }
         }
-        
+
         initViewPager()
     }
 
