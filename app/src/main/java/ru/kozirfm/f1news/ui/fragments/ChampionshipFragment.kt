@@ -3,10 +3,10 @@ package ru.kozirfm.f1news.ui.fragments
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
-import androidx.fragment.app.viewModels
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import kotlinx.android.synthetic.main.fragment_championship.*
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import ru.kozirfm.f1news.R
 import ru.kozirfm.f1news.data.entites.Team
 import ru.kozirfm.f1news.ui.adapters.ChampionshipViewPagerAdapter
@@ -20,7 +20,7 @@ class ChampionshipFragment : BaseFragment(R.layout.fragment_championship) {
 
     override val bottomNavigationVisibility: Int = View.VISIBLE
 
-    private val championshipViewModel by viewModels<ChampionshipViewModel>()
+    private val championshipViewModel by viewModel<ChampionshipViewModel>()
     private val championshipTeamsFragment by lazy { ChampionshipTeamsFragment() }
     private val championshipDriversFragment by lazy { ChampionshipDriversFragment() }
 
@@ -57,7 +57,11 @@ class ChampionshipFragment : BaseFragment(R.layout.fragment_championship) {
                 ).show()
             }
         }
+        
+        initViewPager()
+    }
 
+    private fun initViewPager() {
         val championshipViewPagerAdapter = ChampionshipViewPagerAdapter(this)
         championshipViewPager.adapter = championshipViewPagerAdapter
         championshipViewPagerAdapter.pages =

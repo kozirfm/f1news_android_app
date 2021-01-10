@@ -18,11 +18,16 @@ class ChampionshipDriversFragment :
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        initRecyclerView()
+        championshipRecyclerViewAdapter.driversTable =
+            arguments?.getParcelableArrayList<Driver>("Driver") as ArrayList<Driver>
+    }
+
+    private fun initRecyclerView(){
         championshipDriversRecyclerView.layoutManager =
             LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
         championshipDriversRecyclerView.adapter = championshipRecyclerViewAdapter
         championshipDriversRecyclerView.setHasFixedSize(true)
-        championshipRecyclerViewAdapter.driversTable =
-            arguments?.getParcelableArrayList<Driver>("Driver") as ArrayList<Driver>
     }
+
 }

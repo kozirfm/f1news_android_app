@@ -12,10 +12,9 @@ import ru.kozirfm.f1news.data.entites.Article
 import ru.kozirfm.f1news.data.entites.Team
 import ru.kozirfm.f1news.data.entites.User
 import ru.kozirfm.f1news.data.retrofit.RetrofitApi
+import ru.kozirfm.f1news.data.retrofit.RetrofitService
 
-class ServerDataProvider : RemoteDataProvider {
-
-    private val api = RetrofitApi().requestServer()
+class DataProvider(private val api: RetrofitService) : RemoteDataProvider {
 
     override fun getArticlesPage(): LiveData<PagingData<Article>> {
         return Pager(

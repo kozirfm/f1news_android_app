@@ -34,7 +34,7 @@ class ChampionshipTeamsRecyclerViewAdapter :
 
     class ChampionshipTeamsViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bind(team: Team) = with(itemView) {
-            positionChampionshipTeamTableTextView.text = String.format("%02d", adapterPosition + 1)
+            positionChampionshipTeamTableTextView.text = String.format("%02d", absoluteAdapterPosition + 1)
             fullNameChampionshipTeamTableTextView.text = team.name
             pointsChampionshipTeamTableTextView.text = String.format("%d", team.points)
         }
