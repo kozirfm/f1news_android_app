@@ -16,7 +16,9 @@ val appModule = module {
     single { RetrofitApi().requestServer() }
     single<RemoteDataProvider> { DataProvider(api = get()) }
     factory { MutableLiveData<ViewState>() }
+}
+
+val viewModelsModule = module {
     viewModel { NewsViewModel(serverDataProvider = get(), viewState = get()) }
     viewModel { ChampionshipViewModel(serverDataProvider = get(), viewState = get()) }
-
 }

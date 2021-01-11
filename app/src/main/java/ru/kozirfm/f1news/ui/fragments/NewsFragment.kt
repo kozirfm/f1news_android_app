@@ -50,7 +50,7 @@ class NewsFragment : BaseFragment(R.layout.fragment_news) {
                     viewState.data?.let {
                         newsRecyclerViewAdapter.submitData(
                             viewLifecycleOwner.lifecycle,
-                            it as PagingData<News>
+                            it as PagingData<Article>
                         )
                     }
                 }
@@ -59,26 +59,20 @@ class NewsFragment : BaseFragment(R.layout.fragment_news) {
         }
     }
 
-    private fun initRecyclerViewAdapter(): NewsAdapter{
-        return NewsAdapter { news ->
+    private fun initRecyclerViewAdapter(): NewsAdapter {
+        return NewsAdapter { article ->
             bottomSheetDialogFragment.arguments = Bundle()
-            when (news) {
-                is NewsSimple -> bottomSheetDialogFragment.arguments?.putString(
-                    NewsTextBottomSheetDialogFragment.NEWS_TEXT_ARGUMENTS,
-                    news.text
-                )
-                is NewsWithImage -> bottomSheetDialogFragment.arguments?.putString(
-                    NewsTextBottomSheetDialogFragment.NEWS_TEXT_ARGUMENTS,
-                    news.text
-                )
-            }
+            bottomSheetDialogFragment.arguments?.putString(
+                NewsTextBottomSheetDialogFragment.NEWS_TEXT_ARGUMENTS,
+                article.text
+            )
             bottomSheetDialogFragment.show(
                 requireActivity().supportFragmentManager, tag
             )
         }
     }
 
-    private fun initRecyclerView(newsRecyclerViewAdapter: NewsAdapter){
+    private fun initRecyclerView(newsRecyclerViewAdapter: NewsAdapter) {
         articlesRecyclerView.layoutManager =
             LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
         articlesRecyclerView.setHasFixedSize(true)

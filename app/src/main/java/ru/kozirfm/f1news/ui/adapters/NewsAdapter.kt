@@ -10,12 +10,10 @@ import coil.load
 import kotlinx.android.synthetic.main.item_article.view.*
 import kotlinx.android.synthetic.main.item_article_image.view.*
 import ru.kozirfm.f1news.R
-import ru.kozirfm.f1news.data.entites.News
-import ru.kozirfm.f1news.data.entites.NewsSimple
-import ru.kozirfm.f1news.data.entites.NewsWithImage
+import ru.kozirfm.f1news.data.entites.Article
 
-class NewsAdapter(val itemClick: (News) -> Unit) :
-    PagingDataAdapter<News, RecyclerView.ViewHolder>(DIFF_UTIL_CALLBACK) {
+class NewsAdapter(val itemClick: (Article) -> Unit) :
+    PagingDataAdapter<Article, RecyclerView.ViewHolder>(DIFF_UTIL_CALLBACK) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val inflater = LayoutInflater.from(parent.context)
@@ -32,57 +30,54 @@ class NewsAdapter(val itemClick: (News) -> Unit) :
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        val currentItem = getItem(position)
-        if (currentItem != null) {
-            when (holder) {
-                is NewsPagerViewHolder -> holder.bind(currentItem as NewsSimple)
-                is NewsWithImageViewHolder -> holder.bind(currentItem as NewsWithImage)
-            }
+        when (holder) {
+            is NewsPagerViewHolder -> getItem(position)?.let { holder.bind(it) }
+            is NewsWithImageViewHolder -> getItem(position)?.let { holder.bind(it) }
         }
     }
 
     override fun getItemViewType(position: Int): Int {
-        return when (getItem(position)) {
-            is NewsSimple -> 0
+        return when (getItem(position)?.images) {
+            null -> 0
             else -> 1
         }
     }
 
     inner class NewsPagerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        fun bind(news: NewsSimple) = with(itemView) {
-            articleTitleTextView.text = news.title
-            articleDateTextView.text = news.date
+        fun bind(article: Article) = with(itemView) {
+            articleTitleTextView.text = article.title
+            articleDateTextView.text = article.date
 
             itemView.setOnClickListener {
-                itemClick.invoke(news)
+                itemClick.invoke(article)
             }
         }
     }
 
     inner class NewsWithImageViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
-        fun bind(news: NewsWithImage) = with(itemView) {
-            articleImageTitleTextView.text = news.title
-            articleImageDateTextView.text = news.date
-            articleImageView.load(news.images[0]){
+        fun bind(article: Article) = with(itemView) {
+            articleImageTitleTextView.text = article.title
+            articleImageDateTextView.text = article.date
+            articleImageView.load(article.images?.get(0)) {
                 crossfade(true)
 //                transformations(CircleCropTransformation())
 //                placeholder(R.drawable.f1_avatar)
             }
 
             itemView.setOnClickListener {
-                itemClick.invoke(news)
+                itemClick.invoke(article)
             }
         }
     }
 
     companion object {
-        private val DIFF_UTIL_CALLBACK = object : DiffUtil.ItemCallback<News>() {
-            override fun areItemsTheSame(oldItem: News, newItem: News): Boolean {
-                return oldItem.getItemId() == newItem.getItemId()
+        private val DIFF_UTIL_CALLBACK = object : DiffUtil.ItemCallback<Article>() {
+            override fun areItemsTheSame(oldItem: Article, newItem: Article): Boolean {
+                return oldItem.id == newItem.id
             }
 
-            override fun areContentsTheSame(oldItem: News, newItem: News): Boolean {
+            override fun areContentsTheSame(oldItem: Article, newItem: Article): Boolean {
                 return oldItem == newItem
             }
 

@@ -9,5 +9,5 @@ data class Article(
     val title: String,
     val link: String,
     val text: String,
-    val images: List<String>? = null
+    val images: List<String>? = null,
 )
