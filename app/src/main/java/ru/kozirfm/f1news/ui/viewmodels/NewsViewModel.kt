@@ -1,10 +1,8 @@
 package ru.kozirfm.f1news.ui.viewmodels
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.*
 import androidx.paging.PagingData
+import androidx.paging.cachedIn
 import ru.kozirfm.f1news.data.entites.Article
 import ru.kozirfm.f1news.data.providers.RemoteDataProvider
 import ru.kozirfm.f1news.ui.viewstates.Data
@@ -20,7 +18,7 @@ class NewsViewModel(
     }
 
     fun getData(): LiveData<ViewState> {
-        serverDataProvider.getArticlesPage().observeForever(observer)
+        serverDataProvider.getArticlesPage().cachedIn(viewModelScope).observeForever(observer)
         return viewState
     }
 

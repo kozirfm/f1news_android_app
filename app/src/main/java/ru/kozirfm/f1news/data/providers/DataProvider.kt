@@ -11,17 +11,17 @@ import retrofit2.Response
 import ru.kozirfm.f1news.data.entites.Article
 import ru.kozirfm.f1news.data.entites.Team
 import ru.kozirfm.f1news.data.entites.User
-import ru.kozirfm.f1news.data.retrofit.RetrofitApi
 import ru.kozirfm.f1news.data.retrofit.RetrofitService
 
-class DataProvider(private val api: RetrofitService) : RemoteDataProvider {
+class DataProvider(private val api: RetrofitService, private val newsDataSource: NewsDataSource) :
+    RemoteDataProvider {
 
     override fun getArticlesPage(): LiveData<PagingData<Article>> {
         return Pager(
             config = PagingConfig(
                 pageSize = 20
             )
-        ) { NewsDataSource(api) }.liveData
+        ) { newsDataSource }.liveData
     }
 
     override suspend fun getTeams(): List<Team> {
