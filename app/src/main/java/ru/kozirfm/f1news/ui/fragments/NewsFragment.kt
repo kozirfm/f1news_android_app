@@ -19,7 +19,6 @@ class NewsFragment : BaseFragment(R.layout.fragment_news) {
 
     private val newsViewModel by viewModel<NewsViewModel>()
     override val bottomNavigationVisibility: Int = View.VISIBLE
-    private val bottomSheetDialogFragment by lazy { NewsTextBottomSheetDialogFragment() }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -61,11 +60,13 @@ class NewsFragment : BaseFragment(R.layout.fragment_news) {
 
     private fun initRecyclerViewAdapter(): NewsAdapter {
         return NewsAdapter { article ->
-            bottomSheetDialogFragment.arguments = Bundle()
-            bottomSheetDialogFragment.arguments?.putString(
-                NewsTextBottomSheetDialogFragment.NEWS_TEXT_ARGUMENTS,
-                article.text
-            )
+            val bottomSheetDialogFragment = NewsTextBottomSheetDialogFragment()
+            bottomSheetDialogFragment.arguments = Bundle().apply {
+                putString(
+                    NewsTextBottomSheetDialogFragment.NEWS_TEXT_ARGUMENTS,
+                    article.text
+                )
+            }
             bottomSheetDialogFragment.show(
                 requireActivity().supportFragmentManager, tag
             )
@@ -77,5 +78,10 @@ class NewsFragment : BaseFragment(R.layout.fragment_news) {
             LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
         articlesRecyclerView.setHasFixedSize(true)
         articlesRecyclerView.adapter = newsRecyclerViewAdapter
+    }
+
+    override fun onDestroy() {
+        println("NewsFragmentOnDestroy")
+        super.onDestroy()
     }
 }

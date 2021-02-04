@@ -29,9 +29,10 @@ class RetrofitApi {
             .build()
 
         return Retrofit.Builder()
-            .baseUrl("http://78.37.150.225")
+//            .baseUrl("http://78.37.150.225")
+            .baseUrl("http://192.168.31.60:5050")
             .client(okHttpClient)
-            .addConverterFactory(Json.asConverterFactory(contentType))
+            .addConverterFactory(Json { ignoreUnknownKeys = true }.asConverterFactory(contentType))
             .addCallAdapterFactory(CoroutineCallAdapterFactory())
             .build()
             .create()

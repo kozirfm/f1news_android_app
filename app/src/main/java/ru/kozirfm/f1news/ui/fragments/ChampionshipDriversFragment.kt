@@ -31,4 +31,9 @@ class ChampionshipDriversFragment :
         championshipDriversRecyclerView.adapter = championshipRecyclerViewAdapter
         championshipDriversRecyclerView.setHasFixedSize(true)
     }
+
+    override fun onDestroy() {
+        println("DriversFragmentOnDestroy")
+        super.onDestroy()
+    }
 }

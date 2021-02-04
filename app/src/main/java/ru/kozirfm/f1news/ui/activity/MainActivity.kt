@@ -5,11 +5,15 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import org.koin.androidx.fragment.android.setupKoinFragmentFactory
+import org.koin.core.KoinExperimentalAPI
 import ru.kozirfm.f1news.R
 
+@KoinExperimentalAPI
 class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        setupKoinFragmentFactory()
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 

@@ -80,4 +80,9 @@ class ChampionshipFragment : BaseFragment(R.layout.fragment_championship) {
         }.attach()
     }
 
+    override fun onDestroy() {
+        println("TabFragmentOnDestroy")
+        super.onDestroy()
+    }
+
 }

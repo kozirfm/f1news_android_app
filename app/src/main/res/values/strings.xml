@@ -17,4 +17,6 @@
     <string name="driver">Гонщик</string>
     <string name="team">Команда</string>
     <string name="points">Очки</string>
+    <string name="calendar">Календарь</string>
+    <string name="flag">Флаг</string>
 </resources>

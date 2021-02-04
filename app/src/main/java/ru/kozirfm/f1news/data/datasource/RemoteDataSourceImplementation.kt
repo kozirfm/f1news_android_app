@@ -1,4 +1,4 @@
-package ru.kozirfm.f1news.data.providers
+package ru.kozirfm.f1news.data.datasource
 
 import androidx.lifecycle.LiveData
 import androidx.paging.Pager
@@ -9,23 +9,31 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import ru.kozirfm.f1news.data.entites.Article
+import ru.kozirfm.f1news.data.entites.GrandPrix
 import ru.kozirfm.f1news.data.entites.Team
 import ru.kozirfm.f1news.data.entites.User
 import ru.kozirfm.f1news.data.retrofit.RetrofitService
 
-class DataProvider(private val api: RetrofitService, private val newsDataSource: NewsDataSource) :
-    RemoteDataProvider {
+class RemoteDataSourceImplementation(
+    private val api: RetrofitService,
+    private val newsPagingDataSource: NewsPagingDataSource,
+) :
+    RemoteDataSource {
 
     override fun getArticlesPage(): LiveData<PagingData<Article>> {
         return Pager(
             config = PagingConfig(
                 pageSize = 20
             )
-        ) { newsDataSource }.liveData
+        ) { newsPagingDataSource }.liveData
     }
 
     override suspend fun getTeams(): List<Team> {
         return api.getTeamsAsync().await()
+    }
+
+    override suspend fun getCalendar(): List<GrandPrix> {
+        return api.getCalendarAsync().await()
     }
 
     override fun addUser(user: User) {

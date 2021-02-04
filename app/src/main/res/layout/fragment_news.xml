@@ -15,7 +15,7 @@
 
             <com.google.android.material.appbar.AppBarLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="?actionBarSize"
                 android:background="@android:color/white">
 
 <!--                <ImageView-->
@@ -29,7 +29,7 @@
                 <androidx.appcompat.widget.Toolbar
                     android:id="@+id/mainActivityToolbar"
                     android:layout_width="match_parent"
-                    android:layout_height="?attr/actionBarSize"
+                    android:layout_height="match_parent"
                     app:layout_scrollFlags="enterAlways|scroll"
                     app:menu="@menu/news_fragment_menu"
                     app:title="@string/news" />
@@ -40,7 +40,6 @@
                 android:id="@+id/articlesRecyclerView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:visibility="gone"
                 app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
                 tools:listitem="@layout/item_article" />
 
@@ -49,7 +48,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:visibility="visible" />
+                android:visibility="gone" />
 
         </androidx.coordinatorlayout.widget.CoordinatorLayout>
 

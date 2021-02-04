@@ -27,4 +27,10 @@ class ChampionshipTeamsFragment :
         arguments?.getString("Team")?.let { Json.decodeFromString<List<Team>>(string = it) }
             ?.let { championshipTeamsRecyclerViewAdapter.teamsTable = it}
     }
+
+    override fun onDestroy() {
+        println("TeamsFragmentOnDestroy")
+        super.onDestroy()
+    }
+
 }
