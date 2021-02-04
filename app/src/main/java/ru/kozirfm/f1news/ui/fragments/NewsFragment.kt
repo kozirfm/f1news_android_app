@@ -6,10 +6,10 @@ import androidx.navigation.fragment.findNavController
 import androidx.paging.LoadState.Loading
 import androidx.paging.PagingData
 import androidx.recyclerview.widget.LinearLayoutManager
-import kotlinx.android.synthetic.main.fragment_news.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import ru.kozirfm.f1news.R
 import ru.kozirfm.f1news.data.entites.*
+import ru.kozirfm.f1news.databinding.FragmentNewsBinding
 import ru.kozirfm.f1news.ui.adapters.NewsAdapter
 import ru.kozirfm.f1news.ui.viewmodels.NewsViewModel
 import ru.kozirfm.f1news.ui.viewstates.Data
@@ -19,11 +19,13 @@ class NewsFragment : BaseFragment(R.layout.fragment_news) {
 
     private val newsViewModel by viewModel<NewsViewModel>()
     override val bottomNavigationVisibility: Int = View.VISIBLE
+    private lateinit var binding: FragmentNewsBinding
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding = FragmentNewsBinding.bind(view)
 
-        mainActivityToolbar.setOnMenuItemClickListener {
+        binding.newsFragmentToolbar.setOnMenuItemClickListener {
             when (it.itemId) {
                 R.id.signInMenuItem -> {
                     findNavController().navigate(R.id.action_nav_news_to_authorizationFragment)
@@ -36,10 +38,10 @@ class NewsFragment : BaseFragment(R.layout.fragment_news) {
         initRecyclerView(newsRecyclerViewAdapter)
         newsRecyclerViewAdapter.addLoadStateListener { states ->
             if (states.refresh == Loading) {
-                startLoading(articlesRecyclerView, articlesProgressBar)
+                startLoading(binding.articlesRecyclerView, binding.articlesProgressBar)
             }
             if (states.prepend.endOfPaginationReached) {
-                stopLoading(articlesRecyclerView, articlesProgressBar)
+                stopLoading(binding.articlesRecyclerView, binding.articlesProgressBar)
             }
         }
 
@@ -74,10 +76,10 @@ class NewsFragment : BaseFragment(R.layout.fragment_news) {
     }
 
     private fun initRecyclerView(newsRecyclerViewAdapter: NewsAdapter) {
-        articlesRecyclerView.layoutManager =
+        binding.articlesRecyclerView.layoutManager =
             LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
-        articlesRecyclerView.setHasFixedSize(true)
-        articlesRecyclerView.adapter = newsRecyclerViewAdapter
+        binding.articlesRecyclerView.setHasFixedSize(true)
+        binding.articlesRecyclerView.adapter = newsRecyclerViewAdapter
     }
 
     override fun onDestroy() {

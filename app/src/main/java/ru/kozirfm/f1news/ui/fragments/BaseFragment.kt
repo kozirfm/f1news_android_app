@@ -3,7 +3,8 @@ package ru.kozirfm.f1news.ui.fragments
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
-import kotlinx.android.synthetic.main.activity_main.*
+import com.google.android.material.bottomnavigation.BottomNavigationView
+import ru.kozirfm.f1news.R
 
 abstract class BaseFragment(fragmentLayout: Int) : Fragment(fragmentLayout) {
 
@@ -11,7 +12,8 @@ abstract class BaseFragment(fragmentLayout: Int) : Fragment(fragmentLayout) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        requireActivity().bottomNavigationView.visibility = bottomNavigationVisibility
+        requireActivity().findViewById<BottomNavigationView>(R.id.bottomNavigationView)
+            .visibility = bottomNavigationVisibility
     }
 
     fun startLoading(goneView: View, visibleView: View) {

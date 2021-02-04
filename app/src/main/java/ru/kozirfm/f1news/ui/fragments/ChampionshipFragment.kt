@@ -5,12 +5,12 @@ import android.view.View
 import android.widget.Toast
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
-import kotlinx.android.synthetic.main.fragment_championship.*
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import ru.kozirfm.f1news.R
 import ru.kozirfm.f1news.data.entites.Team
+import ru.kozirfm.f1news.databinding.FragmentChampionshipBinding
 import ru.kozirfm.f1news.ui.adapters.ChampionshipViewPagerAdapter
 import ru.kozirfm.f1news.ui.viewmodels.ChampionshipViewModel
 import ru.kozirfm.f1news.ui.viewstates.Data
@@ -26,13 +26,16 @@ class ChampionshipFragment : BaseFragment(R.layout.fragment_championship) {
     private val championshipTeamsFragment by lazy { ChampionshipTeamsFragment() }
     private val championshipDriversFragment by lazy { ChampionshipDriversFragment() }
 
+    lateinit var fragmentChampionshipBinding: FragmentChampionshipBinding
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        fragmentChampionshipBinding = FragmentChampionshipBinding.bind(view)
 
         championshipViewModel.getData().observe(viewLifecycleOwner) { viewState ->
             when (viewState) {
-                is Loading -> startLoading(goneView = championshipViewPager,
-                    visibleView = championshipProgressBar)
+                is Loading -> startLoading(fragmentChampionshipBinding.championshipViewPager,
+                   fragmentChampionshipBinding.championshipProgressBar)
                 is Data<*> -> {
                     viewState.data?.let {
                         championshipTeamsFragment.arguments = Bundle()
@@ -48,8 +51,8 @@ class ChampionshipFragment : BaseFragment(R.layout.fragment_championship) {
                         )
                     }
                     stopLoading(
-                        visibleView = championshipViewPager,
-                        goneView = championshipProgressBar
+                        fragmentChampionshipBinding.championshipViewPager,
+                        fragmentChampionshipBinding.championshipProgressBar
                     )
                 }
                 is Error -> Toast.makeText(
@@ -65,13 +68,13 @@ class ChampionshipFragment : BaseFragment(R.layout.fragment_championship) {
 
     private fun initViewPager() {
         val championshipViewPagerAdapter = ChampionshipViewPagerAdapter(this)
-        championshipViewPager.adapter = championshipViewPagerAdapter
+        fragmentChampionshipBinding.championshipViewPager.adapter = championshipViewPagerAdapter
         championshipViewPagerAdapter.pages =
             listOf(championshipDriversFragment, championshipTeamsFragment)
 
         TabLayoutMediator(
-            changeChampionshipTableTabLayout,
-            championshipViewPager
+            fragmentChampionshipBinding.changeChampionshipTableTabLayout,
+            fragmentChampionshipBinding.championshipViewPager
         ) { tab: TabLayout.Tab, i: Int ->
             when (i) {
                 0 -> tab.text = "Личный зачёт"

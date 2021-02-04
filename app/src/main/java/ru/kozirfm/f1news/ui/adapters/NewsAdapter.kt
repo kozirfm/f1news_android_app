@@ -7,25 +7,23 @@ import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
-import kotlinx.android.synthetic.main.item_article.view.*
-import kotlinx.android.synthetic.main.item_article_image.view.*
-import ru.kozirfm.f1news.R
 import ru.kozirfm.f1news.data.entites.Article
+import ru.kozirfm.f1news.databinding.ItemArticleBinding
+import ru.kozirfm.f1news.databinding.ItemArticleImageBinding
 
 class NewsAdapter(val itemClick: (Article) -> Unit) :
     PagingDataAdapter<Article, RecyclerView.ViewHolder>(DIFF_UTIL_CALLBACK) {
 
+    lateinit var itemArticleBinding: ItemArticleBinding
+    lateinit var itemArticleImageBinding: ItemArticleImageBinding
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val inflater = LayoutInflater.from(parent.context)
+        itemArticleBinding = ItemArticleBinding.inflate(inflater, parent, false)
+        itemArticleImageBinding = ItemArticleImageBinding.inflate(inflater, parent, false)
         return when (viewType) {
-            0 -> NewsPagerViewHolder(inflater.inflate(R.layout.item_article, parent, false))
-            else -> NewsWithImageViewHolder(
-                inflater.inflate(
-                    R.layout.item_article_image,
-                    parent,
-                    false
-                )
-            )
+            0 -> NewsPagerViewHolder(itemArticleBinding.root)
+            else -> NewsWithImageViewHolder(itemArticleImageBinding.root)
         }
     }
 
@@ -44,9 +42,9 @@ class NewsAdapter(val itemClick: (Article) -> Unit) :
     }
 
     inner class NewsPagerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        fun bind(article: Article) = with(itemView) {
-            articleTitleTextView.text = article.title
-            articleDateTextView.text = article.date
+        fun bind(article: Article) {
+            itemArticleBinding.articleTitleTextView.text = article.title
+            itemArticleBinding.articleDateTextView.text = article.date
 
             itemView.setOnClickListener {
                 itemClick.invoke(article)
@@ -57,9 +55,9 @@ class NewsAdapter(val itemClick: (Article) -> Unit) :
     inner class NewsWithImageViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         fun bind(article: Article) = with(itemView) {
-            articleImageTitleTextView.text = article.title
-            articleImageDateTextView.text = article.date
-            articleImageView.load(article.images?.get(0)) {
+            itemArticleImageBinding.articleImageTitleTextView.text = article.title
+            itemArticleImageBinding.articleImageDateTextView.text = article.date
+            itemArticleImageBinding.articleImageView.load(article.images?.get(0)) {
                 crossfade(true)
 //                transformations(CircleCropTransformation())
 //                placeholder(R.drawable.f1_avatar)

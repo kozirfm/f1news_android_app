@@ -5,8 +5,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import kotlinx.android.synthetic.main.news_text_bottom_sheet_dialog.*
 import ru.kozirfm.f1news.R
+import ru.kozirfm.f1news.databinding.NewsTextBottomSheetDialogBinding
 
 class NewsTextBottomSheetDialogFragment : BottomSheetDialogFragment() {
 
@@ -14,12 +14,16 @@ class NewsTextBottomSheetDialogFragment : BottomSheetDialogFragment() {
         const val NEWS_TEXT_ARGUMENTS = "NEWS_TEXT_ARGUMENTS"
     }
 
+    lateinit var newsTextBottomSheetDialogBinding: NewsTextBottomSheetDialogBinding
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?,
-    ): View? {
-        return inflater.inflate(R.layout.news_text_bottom_sheet_dialog, container, false)
+    ): View {
+        newsTextBottomSheetDialogBinding =
+            NewsTextBottomSheetDialogBinding.inflate(layoutInflater, container, false)
+        return newsTextBottomSheetDialogBinding.root
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -29,7 +33,8 @@ class NewsTextBottomSheetDialogFragment : BottomSheetDialogFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        articleTextTextView.text = arguments?.getString(NEWS_TEXT_ARGUMENTS)
+        newsTextBottomSheetDialogBinding
+            .articleTextTextView.text = arguments?.getString(NEWS_TEXT_ARGUMENTS)
     }
 
 }

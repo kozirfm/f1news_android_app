@@ -4,12 +4,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import kotlinx.android.synthetic.main.item_championship_drivers_table.view.*
-import ru.kozirfm.f1news.R
 import ru.kozirfm.f1news.data.entites.Driver
+import ru.kozirfm.f1news.databinding.ItemChampionshipDriversTableBinding
 
 class ChampionshipDriversRecyclerViewAdapter :
     RecyclerView.Adapter<ChampionshipDriversRecyclerViewAdapter.ChampionshipViewHolder>() {
+
+    lateinit var itemChampionshipDriversBinding: ItemChampionshipDriversTableBinding
 
     var driversTable: List<Driver> = listOf()
         set(value) {
@@ -18,10 +19,9 @@ class ChampionshipDriversRecyclerViewAdapter :
         }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ChampionshipViewHolder {
-        return ChampionshipViewHolder(
-            LayoutInflater.from(parent.context)
-                .inflate(R.layout.item_championship_drivers_table, parent, false)
-        )
+        itemChampionshipDriversBinding = ItemChampionshipDriversTableBinding
+            .inflate(LayoutInflater.from(parent.context), parent, false)
+        return ChampionshipViewHolder(itemChampionshipDriversBinding.root)
     }
 
     override fun onBindViewHolder(holder: ChampionshipViewHolder, position: Int) {
@@ -32,13 +32,18 @@ class ChampionshipDriversRecyclerViewAdapter :
         return driversTable.count()
     }
 
-    class ChampionshipViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    inner class ChampionshipViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bind(driver: Driver) = with(itemView) {
-            positionChampionshipDriverTableTextView.text = String.format("%02d", driver.position)
-            fullNameChampionshipDriverTableTextView.text =
+            itemChampionshipDriversBinding
+                .positionChampionshipDriverTableTextView.text =
+                String.format("%02d", driver.position)
+            itemChampionshipDriversBinding
+                .fullNameChampionshipDriverTableTextView.text =
                 String.format("%s %s", driver.name, driver.surname)
-            teamChampionshipDriverTableTextView.text = driver.team
-            pointsChampionshipDriverTableTextView.text = String.format("%d", driver.points)
+            itemChampionshipDriversBinding
+                .teamChampionshipDriverTableTextView.text = driver.team
+            itemChampionshipDriversBinding
+                .pointsChampionshipDriverTableTextView.text = String.format("%d", driver.points)
         }
     }
 }

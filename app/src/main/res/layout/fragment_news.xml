@@ -27,7 +27,7 @@
 <!--                    tools:ignore="ContentDescription" />-->
 
                 <androidx.appcompat.widget.Toolbar
-                    android:id="@+id/mainActivityToolbar"
+                    android:id="@+id/newsFragmentToolbar"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     app:layout_scrollFlags="enterAlways|scroll"

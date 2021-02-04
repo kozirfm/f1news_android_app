@@ -3,8 +3,8 @@ package ru.kozirfm.f1news.ui.fragments
 import android.os.Bundle
 import android.view.View
 import androidx.navigation.fragment.findNavController
-import kotlinx.android.synthetic.main.fragment_authorization.*
 import ru.kozirfm.f1news.R
+import ru.kozirfm.f1news.databinding.FragmentAuthorizationBinding
 
 class AuthorizationFragment : BaseFragment(R.layout.fragment_authorization) {
 
@@ -12,12 +12,13 @@ class AuthorizationFragment : BaseFragment(R.layout.fragment_authorization) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        val fragmentAuthorizationBinding = FragmentAuthorizationBinding.bind(view)
 
-        authorizationFragmentToolbar.setNavigationOnClickListener {
+        fragmentAuthorizationBinding.authorizationFragmentToolbar.setNavigationOnClickListener {
             findNavController().popBackStack()
         }
 
-        signUpAuthorizationFragmentButton.setOnClickListener {
+        fragmentAuthorizationBinding.signUpAuthorizationFragmentButton.setOnClickListener {
             findNavController().navigate(R.id.action_authorizationFragment_to_registrationFragment)
         }
 

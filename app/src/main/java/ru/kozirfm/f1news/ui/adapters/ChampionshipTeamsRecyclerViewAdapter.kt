@@ -4,12 +4,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import kotlinx.android.synthetic.main.item_championship_teams_table.view.*
-import ru.kozirfm.f1news.R
 import ru.kozirfm.f1news.data.entites.Team
+import ru.kozirfm.f1news.databinding.ItemChampionshipTeamsTableBinding
 
 class ChampionshipTeamsRecyclerViewAdapter :
     RecyclerView.Adapter<ChampionshipTeamsRecyclerViewAdapter.ChampionshipTeamsViewHolder>() {
+
+    lateinit var itemChampionshipTeamsTableBinding: ItemChampionshipTeamsTableBinding
 
     var teamsTable: List<Team> = listOf()
         set(value) {
@@ -18,10 +19,9 @@ class ChampionshipTeamsRecyclerViewAdapter :
         }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ChampionshipTeamsViewHolder {
-        return ChampionshipTeamsViewHolder(
-            LayoutInflater.from(parent.context)
-                .inflate(R.layout.item_championship_teams_table, parent, false)
-        )
+        itemChampionshipTeamsTableBinding = ItemChampionshipTeamsTableBinding
+            .inflate(LayoutInflater.from(parent.context), parent, false)
+        return ChampionshipTeamsViewHolder(itemChampionshipTeamsTableBinding.root)
     }
 
     override fun onBindViewHolder(holder: ChampionshipTeamsViewHolder, position: Int) {
@@ -32,11 +32,15 @@ class ChampionshipTeamsRecyclerViewAdapter :
         return teamsTable.count()
     }
 
-    class ChampionshipTeamsViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    inner class ChampionshipTeamsViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bind(team: Team) = with(itemView) {
-            positionChampionshipTeamTableTextView.text = String.format("%02d", absoluteAdapterPosition + 1)
-            fullNameChampionshipTeamTableTextView.text = team.name
-            pointsChampionshipTeamTableTextView.text = String.format("%d", team.points)
+            itemChampionshipTeamsTableBinding
+                .positionChampionshipTeamTableTextView.text =
+                String.format("%02d", absoluteAdapterPosition + 1)
+            itemChampionshipTeamsTableBinding
+                .fullNameChampionshipTeamTableTextView.text = team.name
+            itemChampionshipTeamsTableBinding
+                .pointsChampionshipTeamTableTextView.text = String.format("%d", team.points)
         }
     }
 

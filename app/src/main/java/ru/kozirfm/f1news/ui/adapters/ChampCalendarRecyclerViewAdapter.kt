@@ -5,12 +5,13 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
-import kotlinx.android.synthetic.main.item_grand_prix.view.*
-import ru.kozirfm.f1news.R
 import ru.kozirfm.f1news.data.entites.GrandPrix
+import ru.kozirfm.f1news.databinding.ItemGrandPrixBinding
 
 class ChampCalendarRecyclerViewAdapter :
     RecyclerView.Adapter<ChampCalendarRecyclerViewAdapter.ChampCalendarViewHolder>() {
+
+    lateinit var itemGrandPrix: ItemGrandPrixBinding
 
     var calendar: List<GrandPrix> = listOf()
         set(value) {
@@ -19,8 +20,9 @@ class ChampCalendarRecyclerViewAdapter :
         }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ChampCalendarViewHolder {
-        return ChampCalendarViewHolder(LayoutInflater.from(parent.context)
-            .inflate(R.layout.item_grand_prix, parent, false))
+        itemGrandPrix = ItemGrandPrixBinding
+            .inflate(LayoutInflater.from(parent.context), parent, false)
+        return ChampCalendarViewHolder(itemGrandPrix.root)
     }
 
     override fun onBindViewHolder(holder: ChampCalendarViewHolder, position: Int) {
@@ -33,15 +35,15 @@ class ChampCalendarRecyclerViewAdapter :
 
     inner class ChampCalendarViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bind(grandPrix: GrandPrix) = with(itemView) {
-            grandPrixDateTextView.text = grandPrix.date
-            grandPrixFlagImageView.load(grandPrix.flag)
-            grandPrixNameTextView.text = grandPrix.grandPrix
-            grandPrixTrackTextView.text = grandPrix.track
-            grandPrixLengthTextView.text = grandPrix.length
-            grandPrixLapsTextView.text = grandPrix.laps
-            grandPrixDistanceTextView.text = grandPrix.distance
-            grandPrixDriverTextView.text = grandPrix.driver
-            grandPrixTeamTextView.text = grandPrix.team
+            itemGrandPrix.grandPrixDateTextView.text = grandPrix.date
+            itemGrandPrix.grandPrixFlagImageView.load(grandPrix.flag)
+            itemGrandPrix.grandPrixNameTextView.text = grandPrix.grandPrix
+            itemGrandPrix.grandPrixTrackTextView.text = grandPrix.track
+            itemGrandPrix.grandPrixLengthTextView.text = grandPrix.length
+            itemGrandPrix.grandPrixLapsTextView.text = grandPrix.laps
+            itemGrandPrix.grandPrixDistanceTextView.text = grandPrix.distance
+            itemGrandPrix.grandPrixDriverTextView.text = grandPrix.driver
+            itemGrandPrix.grandPrixTeamTextView.text = grandPrix.team
         }
     }
 
